@@ -163,7 +163,7 @@ import { Subject } from 'rxjs';
 let lastEventId = 0;
 const pullStream$ = new Subject();
 
-app.get('/push', (req, res) => {
+app.post('/push', (req, res) => {
     const changeRows = req.body;
     const conflicts = [];
     const event = {
@@ -197,7 +197,7 @@ app.get('/push', (req, res) => {
         }
     }
     if(event.documents.length > 0){
-        myPullStream$.next(event);
+        pullStream$.next(event);
     }
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(conflicts));
